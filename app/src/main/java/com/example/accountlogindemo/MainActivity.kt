@@ -26,22 +26,26 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var callbackManager: CallbackManager
     private lateinit var auth: FirebaseAuth
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         auth = FirebaseAuth.getInstance()
         callbackManager = CallbackManager.Factory.create()
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         verifyLogin()
         getHashKey()
