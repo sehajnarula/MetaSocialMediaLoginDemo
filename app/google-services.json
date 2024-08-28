@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "704448661830",
+    "project_id": "accountlogindemo-9947f",
+    "storage_bucket": "accountlogindemo-9947f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704448661830:android:d2a8d754dea7bb58797d47",
+        "android_client_info": {
+          "package_name": "com.example.accountlogindemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXov_cYSDS5xYc7nwJPoMjvG1SCZhzeTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
