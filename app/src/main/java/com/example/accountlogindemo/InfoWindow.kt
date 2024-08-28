@@ -98,7 +98,6 @@ class InfoWindow : AppCompatActivity() {
         parameters.putString("fields", "picture.type(large)")
         request.parameters = parameters
         request.executeAsync()
-
     }
 
 }
