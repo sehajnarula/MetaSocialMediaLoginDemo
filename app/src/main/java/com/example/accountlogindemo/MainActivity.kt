@@ -16,6 +16,8 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(application)
         auth = FirebaseAuth.getInstance()
         callbackManager = CallbackManager.Factory.create()
         enableEdgeToEdge()
@@ -117,6 +121,9 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
+                    println("User : ${user?.displayName}")
+                    println("User : ${user?.email}")
+                    println("User : ${user?.photoUrl}")
                     startActivity(Intent(this,InfoWindow::class.java))
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
