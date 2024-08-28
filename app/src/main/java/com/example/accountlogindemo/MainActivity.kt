@@ -31,16 +31,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var callbackManager: CallbackManager
     private lateinit var auth: FirebaseAuth
-    private val TAG = "MainActivity"
+    private val TAG=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
-        FacebookSdk.sdkInitialize(applicationContext)
-        AppEventsLogger.activateApp(application)
-        auth = FirebaseAuth.getInstance()
-        callbackManager = CallbackManager.Factory.create()
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
@@ -50,9 +45,20 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        inits()
         verifyLogin()
         getHashKey()
+
+    }
+
+    fun inits(){
+
+        FirebaseApp.initializeApp(this)
+        FacebookSdk.fullyInitialize()
+        AppEventsLogger.activateApp(application)
+        auth = FirebaseAuth.getInstance()
+        callbackManager = CallbackManager.Factory.create()
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
     }
 
@@ -69,12 +75,14 @@ class MainActivity : AppCompatActivity() {
         var buttonFacebookLogin = findViewById<LoginButton>(R.id.login_button)
 
         buttonFacebookLogin.setOnClickListener {
+
             if (userLoggedIn()){
                 auth.signOut()
             }
             else{
                 LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile","email"))
             }
+
         }
 
         LoginManager.getInstance().registerCallback(callbackManager, object :

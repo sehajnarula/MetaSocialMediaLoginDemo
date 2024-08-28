@@ -48,25 +48,7 @@ class InfoWindow : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         imgafterlogin = findViewById(R.id.imgafterlogin)
         textafterlogin = findViewById(R.id.textafterlogin)
-        val idWithAccessToken = AccessToken.getCurrentAccessToken()?.userId
-        val photourl = "https://graph.facebook.com/$idWithAccessToken/picture?type=large"
-
-//        val photourlOne = "https://graph.facebook.com/${auth.currentUser?.uid}/picture?type=large"
-//        val userId = auth.currentUser?.uid
-//        val photourltwo = "https://graph.facebook.com/$userId/picture?type=large"
-//        Picasso.get().load(auth.currentUser?.photoUrl).into(imgafterlogin)
-
-//        if (!photourl.isNullOrEmpty()){
-//            Picasso.get().load(photourl).into(imgafterlogin)
-//          Glide.with(this).load(photourl).into(imgafterlogin)
-//        }
-
-//        else{
-//            Toast.makeText(this, "Unable to get profile picture", Toast.LENGTH_SHORT).show()
-//        }
-
         fetchProfilePicture()
-
         textafterlogin.setText(auth.currentUser?.displayName)
 
     }
@@ -79,25 +61,95 @@ class InfoWindow : AppCompatActivity() {
 
     }
 
-    fun fetchProfilePicture(){
+//    fun fetchProfilePicture(){
+//
+//        val accessToken = AccessToken.getCurrentAccessToken()
+//
+//        val request = GraphRequest.newMeRequest(
+//            accessToken,
+//            GraphRequest.GraphJSONObjectCallback { jsonObject, response ->
+//                val profilePictureUrl = jsonObject?.getJSONObject("picture")
+//                    ?.getJSONObject("data")
+//                    ?.getString("url")
+//
+//                Picasso.get().load(profilePictureUrl).into(imgafterlogin)
+//            }
+//        )
+//        val parameters = Bundle()
+//        parameters.putString("fields", "picture.type(large)")
+//        request.parameters = parameters
+//        request.executeAsync()
+//    }
 
+//    fun fetchProfilePicture(){
+//
+//        val accessToken = AccessToken.getCurrentAccessToken()
+//
+//        if (accessToken!=null && !accessToken.isExpired){
+//            val request = GraphRequest.newMeRequest(
+//                accessToken,
+//                GraphRequest.GraphJSONObjectCallback { jsonObject, response ->
+//                    val profilePictureUrl = try {
+//                        jsonObject?.getJSONObject("picture")
+//                            ?.getJSONObject("data")
+//                            ?.getString("url")
+//                    }
+//                    catch (e:Exception){
+//                        null
+//                    }
+//
+//                    if (!profilePictureUrl.isNullOrEmpty()){
+//                        Picasso.get().load(profilePictureUrl).into(imgafterlogin)
+//                    }
+//                    else{
+//                        Toast.makeText(this, "Unable to display image", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            )
+//            val parameters = Bundle()
+//            parameters.putString("fields", "picture.type(large)")
+//            request.parameters = parameters
+//            request.executeAsync()
+//        }
+//
+//        else{
+//            Toast.makeText(this, "Token Expired", Toast.LENGTH_SHORT).show()
+//        }
+//
+//    }
+
+    fun fetchProfilePicture() {
         val accessToken = AccessToken.getCurrentAccessToken()
 
-        val request = GraphRequest.newMeRequest(
-            accessToken,
-            GraphRequest.GraphJSONObjectCallback { jsonObject, response ->
-                val profilePictureUrl = jsonObject?.getJSONObject("picture")
-                    ?.getJSONObject("data")
-                    ?.getString("url")
+        if (accessToken != null && !accessToken.isExpired) {
+            val request = GraphRequest.newMeRequest(
+                accessToken
+            ) { jsonObject, response ->
+                val profilePictureUrl = try {
+                    jsonObject?.getJSONObject("picture")
+                        ?.getJSONObject("data")
+                        ?.getString("url")
+                } catch (e: Exception) {
+                    null
+                }
 
-                Picasso.get().load(profilePictureUrl).into(imgafterlogin)
+                if (!profilePictureUrl.isNullOrEmpty()) {
+                    Picasso.get().load(profilePictureUrl).into(imgafterlogin)
+                } else {
+                    Toast.makeText(this, "Unable to display image", Toast.LENGTH_SHORT).show()
+                }
+
             }
-        )
 
-        val parameters = Bundle()
-        parameters.putString("fields", "picture.type(large)")
-        request.parameters = parameters
-        request.executeAsync()
+            val parameters = Bundle()
+            parameters.putString("fields", "picture.type(large)")
+            request.parameters = parameters
+            request.executeAsync()
+
+        } else {
+            Toast.makeText(this, "Token Expired", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 }
