@@ -44,9 +44,13 @@ class InfoWindow : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         imgafterlogin = findViewById(R.id.imgafterlogin)
         textafterlogin = findViewById(R.id.textafterlogin)
-        val facebookUserId = AccessToken.getCurrentAccessToken()?.userId
-        val photourl = "https://graph.facebook.com/$facebookUserId/picture?type=large"
-        //Picasso.get().load(auth.currentUser?.photoUrl).into(imgafterlogin)
+        val idWithAccessToken = AccessToken.getCurrentAccessToken()?.userId
+        val photourl = "https://graph.facebook.com/$idWithAccessToken/picture?type=large"
+//        val photourlOne = "https://graph.facebook.com/${auth.currentUser?.uid}/picture?type=large"
+//        val userId = auth.currentUser?.uid
+//        val photourltwo = "https://graph.facebook.com/$userId/picture?type=large"
+//        Picasso.get().load(auth.currentUser?.photoUrl).into(imgafterlogin)
+
         Log.d("showurl",photourl)
 
         if (!photourl.isNullOrEmpty()){
