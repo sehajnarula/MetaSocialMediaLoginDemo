@@ -71,8 +71,8 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:24.0.0")
 
     //facebooklogin
-    //implementation("com.facebook.android:facebook-login:latest.release")
-    implementation("com.facebook.android:facebook-login:15.2.0")
+    implementation("com.facebook.android:facebook-login:latest.release")
+    //implementation("com.facebook.android:facebook-login:15.2.0")
 
     //picassolib
     implementation("com.squareup.picasso:picasso:2.71828")
